@@ -1,33 +1,36 @@
-import 'dart:convert'; 
+import 'dart:convert';
 // Import der json Datei
 import 'dart:io';
 //Arbeiten (Eingabe und Ausgabe) mit dem Terminal
 
-class rundgang {
+class Rundgang {
   String? key;
   String? value;
 
-  rundgang(this.key, this.value);
+  Rundgang(this.key, this.value);
 
-  factory rundgang.fromJSON(Map<String, dynamic> json) {
-    return rundgang(json["key"] as String, json["value"] as String);
+  factory Rundgang.fromJSON(Map<String, dynamic> json) {
+    return Rundgang(json["key"] as String, json["value"] as String);
   }
   // Ein json Objekt wird als Eingabe entgegengenommen und erstellt ein Objekt
+  static void rundgang() {
+    main();
+  }
 }
-void main() {
 
-   final file = File('rundgang.json');
-   //Variable file vom Datentyp File, verwendung um auf die json Datei zuzugreifen
+void main() {
+  final file = File('rundgang.json');
+  //Variable file vom Datentyp File, verwendung um auf die json Datei zuzugreifen
 
   final jsonString = file.readAsStringSync();
   final jsonList = json.decode(jsonString) as List<dynamic>;
-  //In dieser Funktion wird dedr json String umgewandelt in ein Dart String und wird an die Liste zurück gegeben1
-  final rundgangs = jsonList.map((json) => rundgang.fromJSON(json)).toList();
+  //In dieser Funktion wird dedr json String umgewandelt in ein Dart String und wird an die Liste zurück gegeben
+  final rundgangs = jsonList.map((json) => Rundgang.fromJSON(json)).toList();
 
-  final keys = rundgangs.map((rundgang) => rundgang.key).toList();
-  final values = rundgangs.map((rundgang) => rundgang.value).toList();
+  final keys = rundgangs.map((R) => R.key).toList();
+  final values = rundgangs.map((R) => R.value).toList();
 
-   print('Wählen Sie eine Option:');
+  print('Wählen Sie ein Thema:');
   for (var i = 0; i < keys.length; i++) {
     // Die for Schleife läuft über die Liste keys drüber, Ausgabe des jeweiligen Index und Schlüssel
     print('${i + 1}. ${keys[i]}');
@@ -42,4 +45,3 @@ void main() {
     return;
   }
 }
-
